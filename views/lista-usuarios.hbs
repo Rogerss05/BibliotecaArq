@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-900 text-white font-sans p-10">
+
+    <div class="max-w-5xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-cyan-400">Usuarios del Sistema</h1>
+            <div class="space-x-4">
+                <a href="/libros/admin" class="text-slate-400 hover:text-white">Regresar al Panel</a>
+                <a href="/usuarios/crear"
+                    class="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded-lg font-bold shadow-lg transition">
+                    + Nuevo Usuario
+                </a>
+            </div>
+        </div>
+
+        <div class="bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-2xl">
+            <table class="w-full text-left">
+                <thead class="bg-slate-700 text-slate-300 uppercase text-xs">
+                    <tr>
+                        <th class="px-6 py-4">ID</th>
+                        <th class="px-6 py-4">Nombre de Usuario</th>
+                        <th class="px-6 py-4">Rol</th>
+                        <th class="px-6 py-4">Contraseña</th>
+                        <th class="px-6 py-4">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-700">
+                    {{#each usuarios}}
+                    <tr class="hover:bg-slate-700/50 transition">
+                        <td class="px-6 py-4 text-slate-400">#{{this.id}}</td>
+                        <td class="px-6 py-4 font-bold text-white">{{this.nombreUsuario}}</td>
+                        <td class="px-6 py-4">
+                            <span
+                                class="bg-slate-900 text-cyan-400 px-3 py-1 rounded-full text-xs border border-slate-600 font-bold uppercase tracking-wider shadow-sm">
+                                {{this.rol}}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-slate-500 font-mono">••••••</td>
+                        <td class="px-6 py-4 text-right">
+                            <form action="/usuarios/eliminar/{{this.id}}" method="post"
+                                onsubmit="return confirm('¿Seguro que quieres eliminar a este usuario?');">
+                                <button type="submit"
+                                    class="text-red-400 hover:text-red-300 font-bold text-sm transition flex items-center justify-end ml-auto">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                        </path>
+                                    </svg>
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+
+            {{#unless usuarios}}
+            <div class="p-8 text-center text-slate-500">No hay usuarios registrados aún.</div>
+            {{/unless}}
+        </div>
+    </div>
+
+</body>
+
+</html>

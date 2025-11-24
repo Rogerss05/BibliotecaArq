@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Usuario</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-900 text-white font-sans flex items-center justify-center min-h-screen">
+
+    <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700">
+        <h2 class="text-2xl font-bold text-purple-400 mb-6">Registrar Usuario</h2>
+
+        <form action="/usuarios/guardar" method="post" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">Nombre de Usuario</label>
+                <input type="text" name="nombreUsuario" required
+                    class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500 transition">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">Contraseña</label>
+                <input type="text" name="contrasena" required
+                    class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500 transition">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-slate-300 mb-1">Rol</label>
+                <select name="rol"
+                    class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 focus:outline-none focus:border-purple-500 transition">
+                    <option value="alumno">Alumno</option>
+                    <option value="admin">Bibliotecario (Admin)</option>
+                </select>
+            </div>
+
+            <div class="flex space-x-4 pt-4">
+                <a href="/usuarios/admin"
+                    class="flex-1 py-2 text-center text-slate-400 hover:text-white border border-slate-600 rounded-lg transition">Cancelar</a>
+                <button type="submit"
+                    class="flex-1 bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg shadow-lg transition">
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>
