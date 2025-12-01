@@ -8,6 +8,7 @@ import { Libro } from './entities/libro.entity';
 import { CrearLibroHandler } from './cqrs/crear-libro.handler';
 import { UnamApiService } from './infrastructure/unam.api-service';
 import { EliminarLibroHandler } from './cqrs/eliminar-libro.handler';
+import { EditarLibroHandler } from './cqrs/editar-libro.handler';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { EliminarLibroHandler } from './cqrs/eliminar-libro.handler';
     CrearLibroHandler,
     UnamApiService,
     EliminarLibroHandler,
+    EditarLibroHandler,
   ],
   exports: [LibroDao] // Exportamos el DAO por si lo necesitamos fuera
 })

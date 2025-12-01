@@ -7,7 +7,10 @@ import { UnamApiService } from './infrastructure/unam.api-service';
 import { LibroViewModel } from './viewmodels/libro.viewmodel';
 import { EliminarLibroCommand } from './cqrs/eliminar-libro.command';
 import { Param } from '@nestjs/common';
+import { EditarLibroCommand } from './cqrs/editar-libro.command';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Libros')
 @Controller('libros')
 export class LibrosController {
     constructor(
@@ -124,5 +127,22 @@ export class LibrosController {
     @Get()
     async obtenerTodos() {
         return await this.libroDao.obtenerLibrosInternos();
+    }
+
+    // Editar Libros
+    @Get('editar/:id')
+    @Render('editar-libro')
+    async verEdicion(@Param('id') id: number) {
+        const libro = await this.libroDao.obtenerPorId(id);
+        return { libro };
+    }
+
+    @Post('actualizar/:id')
+    async actualizar(@Param('id') id: number, @Body() body: any, @Res() res: Response) {
+        const { titulo, genero, portada, pdf } = body;
+        await this.commandBus.execute(
+            new EditarLibroCommand(id, titulo, genero, portada, pdf),
+        );
+        return res.redirect('/libros/admin-lista');
     }
 }

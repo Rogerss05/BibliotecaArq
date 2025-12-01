@@ -6,6 +6,7 @@ import { UsuarioDao } from './dao/usuario.dao';
 import { Usuario } from './entities/usuario.entity';
 import { CrearUsuarioHandler } from './cqrs/crear-usuario.handler';
 import { EliminarUsuarioHandler } from './cqrs/eliminar-usuario.handler';
+import { EditarUsuarioHandler } from './cqrs/editar-usuario.handler';
 
 
 @Module({
@@ -15,6 +16,7 @@ import { EliminarUsuarioHandler } from './cqrs/eliminar-usuario.handler';
     UsuarioDao,
     CrearUsuarioHandler,
     EliminarUsuarioHandler,
+    EditarUsuarioHandler,
   ],
 })
 export class UsuariosModule { }

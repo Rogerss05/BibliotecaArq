@@ -30,4 +30,12 @@ export class LibroDao {
     async eliminarLibro(id: number): Promise<void> {
         await this.libroRepo.delete(id);
     }
+
+    async obtenerPorId(id: number): Promise<Libro | null> {
+        return await this.libroRepo.findOne({ where: { id } });
+    }
+
+    async actualizarLibro(id: number, datosNuevos: Partial<Libro>): Promise<void> {
+        await this.libroRepo.update(id, datosNuevos);
+    }
 }

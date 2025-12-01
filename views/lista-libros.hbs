@@ -35,8 +35,7 @@
                         <td class="px-6 py-4 font-bold text-white">{{this.titulo}}</td>
                         <td class="px-6 py-4 text-slate-400">{{this.genero}}</td>
                         <td class="px-6 py-4 text-right">
-                            <form action="/libros/eliminar/{{this.id}}" method="post"
-                                onsubmit="return confirm('¿Eliminar este libro permanentemente?');">
+                            <form action="/libros/eliminar/{{this.id}}" method="post" class="form-eliminar">
                                 <button type="submit"
                                     class="text-red-400 hover:text-red-300 text-sm font-bold flex items-center justify-end ml-auto">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,6 +46,15 @@
                                     Eliminar
                                 </button>
                             </form>
+                            <a href="/libros/editar/{{this.id}}"
+                                class="text-cyan-400 hover:text-cyan-300 font-bold text-sm flex items-center justify-end ml-auto mb-2">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                    </path>
+                                </svg>
+                                Editar
+                            </a>
                         </td>
                     </tr>
                     {{/each}}
@@ -57,6 +65,36 @@
             {{/unless}}
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Buscamos todos los formularios que tengan la clase 'form-eliminar'
+        const formularios = document.querySelectorAll('.form-eliminar');
+
+        formularios.forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault(); // Detenemos el envío automático
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esta acción!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar',
+                    background: '#1f2937', // Fondo oscuro para combinar con tu tema
+                    color: '#fff'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.submit(); // Si dice que sí, enviamos el formulario
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

@@ -3,9 +3,12 @@ import type { Response } from 'express';
 import { CommandBus } from '@nestjs/cqrs';
 import { CrearUsuarioCommand } from './cqrs/crear-usuario.command';
 import { EliminarUsuarioCommand } from './cqrs/eliminar-usuario.command';
+import { EditarUsuarioCommand } from './cqrs/editar-usuario.command';
 import { UsuarioDao } from './dao/usuario.dao';
 import { Usuario } from './entities/usuario.entity';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Usuarios')
 @Controller('usuarios')
 export class UsuariosController {
     constructor(
@@ -48,6 +51,22 @@ export class UsuariosController {
     async eliminar(@Param('id') id: number, @Res() res: Response) {
         await this.commandBus.execute(new EliminarUsuarioCommand(id));
         return res.redirect('/usuarios/admin'); // Recargamos la lista
+    }
+
+    @Get('editar/:id')
+    @Render('editar-usuario')
+    async verEdicion(@Param('id') id: number) {
+        const usuario = await this.usuarioDao.obtenerPorId(id);
+        return { usuario };
+    }
+
+    @Post('actualizar/:id')
+    async actualizar(@Param('id') id: number, @Body() body: any, @Res() res: Response) {
+        const { nombreUsuario, contrasena, rol } = body;
+        await this.commandBus.execute(
+            new EditarUsuarioCommand(id, nombreUsuario, rol, contrasena),
+        );
+        return res.redirect('/usuarios/admin');
     }
 
     // ==========================================

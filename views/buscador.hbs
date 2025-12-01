@@ -16,6 +16,13 @@
 
 <body class="bg-slate-900 text-white min-h-screen">
 
+    <div id="loadingOverlay"
+        class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex-col items-center justify-center transition-opacity">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-cyan-500 mb-4"></div>
+        <h2 class="text-xl text-white font-semibold animate-pulse">Buscando en la red universal...</h2>
+        <p class="text-slate-400 text-sm">Consultando universidades aliadas</p>
+    </div>
+
     <nav class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -142,6 +149,24 @@
         </div>
         {{/unless}}
     </div>
+
+    <script>
+        const formBusqueda = document.querySelector('form');
+        const overlay = document.getElementById('loadingOverlay');
+
+        if (formBusqueda) {
+            formBusqueda.addEventListener('submit', () => {
+                overlay.classList.remove('hidden');
+                overlay.classList.add('flex');
+            });
+        }
+
+        window.addEventListener('pageshow', () => {
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+        });
+    </script>
+
 </body>
 
 </html>
